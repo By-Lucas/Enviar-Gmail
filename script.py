@@ -7,6 +7,34 @@ from email.mime.base import MIMEBase
 from tkinter import *
 from tkinter import messagebox
 
+import functools
+from concurrent import futures
+
+
+thread_pool_executor = futures.ThreadPoolExecutor(max_workers=1)
+
+def tk_after(target):
+
+    @functools.wraps(target)
+    def wrapper(self, *args, **kwargs):
+        args = (self,) + args
+        self.after(0, target, *args, **kwargs)
+
+    return wrapper
+
+def submit_to_pool_executor(executor):
+
+    def decorator(target):
+
+        @functools.wraps(target)
+        def wrapper(*args, **kwargs):
+            return executor.submit(target, *args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
+@submit_to_pool_executor(thread_pool_executor)
 def enviar_email():
     try:
         if entry_email.get() == '':
