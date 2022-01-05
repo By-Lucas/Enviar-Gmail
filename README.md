@@ -3,6 +3,6 @@
 ## Enviar e-mail com com python, sendo possivel enviar para diveros emails ao mesmo tempo.
 
 <p align='center'>
-  <img href='/gmail.png' width=600px>
+  <img width=600px height=450px href='gmail.jpg' >
 </p>
  
